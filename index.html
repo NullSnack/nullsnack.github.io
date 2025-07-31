@@ -77,8 +77,8 @@
             <div class="stat-row"><span>I.Q.</span><span id="stat-iq">10</span></div>
             <div class="stat-row"><span>piety</span><span id="stat-piety">10</span></div>
             <div class="stat-row"><span>vitality</span><span id="stat-vitality">10</span></div>
-            <div class="stat-row"><span>dexterity</span><span id="stat-dexterity">10</span></div>
-            <div class="stat-row"><span>speed</span><span id="stat-speed">10</span></div>
+            <div class="stat-row"><span>dexterity</span><span id="stat-speed">10</span></div>
+            <div class="stat-row"><span>speed</span><span id="stat-dexterity">10</span></div>
             <div class="stat-row"><span>luck</span><span id="stat-luck">10</span></div>
         </div>
     </div>
@@ -90,43 +90,43 @@
         iq: 10,
         piety: 10,
         vitality: 10,
-        dexterity: 10,
         speed: 10,
+        dexterity: 10,
         luck: 10
     };
 
     const sexMod = {
-        Man: { strength: 1, vitality: 1, dexterity: 1 },
-        Woman: { iq: 1, piety: 1, speed: 1 }
+        Man: { strength: 1, vitality: 1, speed: 1 },
+        Woman: { iq: 1, piety: 1, dexterity: 1 }
     };
 
     const attributeMod = {
         Fire: { strength: 2, vitality: 1 },
-        Air: { dexterity: 1, speed: 2 },
-        Earth: { vitality: 2, piety: 1 },
-        Water: { iq: 2, vitality: 1 },
-        Light: { iq: 2, piety: 2 },
+        Air: { speed: 1, dexterity: 2 },
+        Earth: { vitality: 2, speed: 1 },
+        Water: { iq: 2, piety: 1 },
+        Light: { piety: 2, luck: 1 },
         Darkness: { iq: 2, luck: 1 },
-        Neutral: { strength: 1, iq: 1, piety: 1, vitality: 1, dexterity: 1, speed: 1, luck: 1 }
+        Neutral: { strength: 1, iq: 1, piety: 1, vitality: 1, speed: 1, dexterity: 1, luck: 1 }
     };
 
     const raceMod = {
         Human: {},
-        Elf: { strength: -2, iq: 3, piety: -1, vitality: -2, dexterity: 3, speed: 2, luck: -1 },
-        Dwarf: { strength: 2, iq: -2, piety: -2, vitality: 3, dexterity: -2, speed: -2, luck: 2 },
-        Beastman: { strength: -1, iq: -1, piety: 4, vitality: 2, dexterity: 2, speed: 3, luck: -3 }
+        Elf: { strength: -2, iq: 3, piety: -1, vitality: -2, speed: 2, dexterity: 1, luck: -1 },
+        Dwarf: { strength: 2, iq: -2, piety: 1, vitality: 3, speed: 3, dexterity: -4, luck: -3 },
+        Beastman: { strength: -1, iq: 1, piety: -4, vitality: 2, speed: 2, dexterity: 3, luck: -3 }
     };
 
     const classMod = {
-        Fighter: { strength: 3, iq: 1, vitality: 3, dexterity: 2, speed: 2 },
-        Knight: { strength: 3, iq: 1, piety: 1, vitality: 3, dexterity: 1 },
-        Thief: { strength: 1, iq: 1, vitality: 1, dexterity: 3, speed: 3, luck: 3 },
-        Priest: { strength: 2, iq: 1, piety: 3, vitality: 2, speed: 2 },
-        Mage: { strength: 1, iq: 3, piety: 3, luck: 2 },
-        "Tall Mage": { strength: 2, iq: 2, piety: 2, luck: 2 },
-        "Mage of the Black Rod": { strength: 3, iq: 2, piety: 2, luck: 3 },
-        Ninja: { strength: 2, iq: 1, vitality: 2, dexterity: 2, speed: 3 },
-        Samurai: { strength: 3, iq: 1, vitality: 2, dexterity: 2, speed: 2 }
+        Fighter: { strength: 3, iq: 1, piety: 1, vitality: 2, speed: 2, dexterity: 1, luck: 1 },
+        Knight: { strength: 3, iq: 1, piety: 2, vitality: 3, speed: 1, dexterity: 1, luck: 1 },
+        Thief: { strength: 1, iq: 1, piety: 1, vitality: 1, speed: 2, dexterity: 3, luck: 2 },
+        Priest: { strength: 1, iq: 2, piety: 3, vitality: 1, speed: 1, dexterity: 1, luck: 2 },
+        Mage: { strength: 1, iq: 3, piety: 1, vitality: 1, speed: 2, dexterity: 2, luck: 1 },
+        "Tall Mage": { strength: 2, iq: 2, piety: 1, vitality: 1, speed: 1, dexterity: 1, luck: 1 },
+        "Mage of the Black Rod": { strength: 3, iq: 2, piety: 1, vitality: 2, speed: 2, dexterity: 1, luck: 2 },
+        Ninja: { strength: 2, iq: 1, piety: 1, vitality: 1, speed: 2, dexterity: 3, luck: 2 },
+        Samurai: { strength: 3, iq: 2, piety: 1, vitality: 2, speed: 2, dexterity: 1, luck: 1 }
     };
 
     function calculateStats() {
