@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adventurer Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 2rem;
+        }
+        .label-text {
+            color: #ccff33;
+        }
+        .stat-box {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 1rem;
+            width: 200px;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            color: #f9c80e;
+            font-family: monospace;
+            padding: 2px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container-md">
+    <div class="d-flex justify-content-between">
+        <div style="flex: 1;">
+            <label class="label-text" for="race">Race</label>
+            <select class="form-select" id="race">
+                <option selected>Human</option>
+                <option>Elf</option>
+                <option>Dwarf</option>
+                <option>Beastman</option>
+            </select>
+
+            <label class="label-text" for="class">Class</label>
+            <select class="form-select" id="class">
+                <option selected>Fighter</option>
+                <option>Knight</option>
+                <option>Thief</option>
+                <option>Priest</option>
+                <option>Mage</option>
+                <option>Tall Mage</option>
+                <option>Mage of the Black Rod</option>
+                <option>Ninja</option>
+                <option>Samurai</option>
+            </select>
+
+            <label class="label-text" for="sex">Sex</label>
+            <select class="form-select" id="sex">
+                <option selected>Man</option>
+                <option>Woman</option>
+            </select>
+
+            <label class="label-text" for="attribute">Attribute</label>
+            <select class="form-select" id="attribute">
+                <option selected>Fire</option>
+                <option>Air</option>
+                <option>Earth</option>
+                <option>Water</option>
+                <option>Light</option>
+                <option>Darkness</option>
+                <option>Neutral</option>
+            </select>
+        </div>
+
+
+        <div class="stat-box ms-4" id="statBox">
+            <div class="stat-row"><span>strength</span><span id="stat-strength">10</span></div>
+            <div class="stat-row"><span>I.Q.</span><span id="stat-iq">10</span></div>
+            <div class="stat-row"><span>piety</span><span id="stat-piety">10</span></div>
+            <div class="stat-row"><span>vitality</span><span id="stat-vitality">10</span></div>
+            <div class="stat-row"><span>dexterity</span><span id="stat-dexterity">10</span></div>
+            <div class="stat-row"><span>speed</span><span id="stat-speed">10</span></div>
+            <div class="stat-row"><span>luck</span><span id="stat-luck">10</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const baseStats = {
+        strength: 10,
+        iq: 10,
+        piety: 10,
+        vitality: 10,
+        dexterity: 10,
+        speed: 10,
+        luck: 10
+    };
+
+    const sexMod = {
+        Man: { strength: 1, vitality: 1, dexterity: 1 },
+        Woman: { iq: 1, piety: 1, speed: 1 }
+    };
+
+    const attributeMod = {
+        Fire: { strength: 2, vitality: 1 },
+        Air: { dexterity: 1, speed: 2 },
+        Earth: { vitality: 2, piety: 1 },
+        Water: { iq: 2, vitality: 1 },
+        Light: { iq: 2, piety: 2 },
+        Darkness: { iq: 2, luck: 1 },
+        Neutral: { strength: 1, iq: 1, piety: 1, vitality: 1, dexterity: 1, speed: 1, luck: 1 }
+    };
+
+    const raceMod = {
+        Human: {},
+        Elf: { strength: -2, iq: 3, piety: -1, vitality: -2, dexterity: 3, speed: 2, luck: -1 },
+        Dwarf: { strength: 2, iq: -2, piety: -2, vitality: 3, dexterity: -2, speed: -2, luck: 2 },
+        Beastman: { strength: -1, iq: -1, piety: 4, vitality: 2, dexterity: 2, speed: 3, luck: -3 }
+    };
+
+    const classMod = {
+        Fighter: { strength: 3, iq: 1, vitality: 3, dexterity: 2, speed: 2 },
+        Knight: { strength: 3, iq: 1, piety: 1, vitality: 3, dexterity: 1 },
+        Thief: { strength: 1, iq: 1, vitality: 1, dexterity: 3, speed: 3, luck: 3 },
+        Priest: { strength: 2, iq: 1, piety: 3, vitality: 2, speed: 2 },
+        Mage: { strength: 1, iq: 3, piety: 3, luck: 2 },
+        "Tall Mage": { strength: 2, iq: 2, piety: 2, luck: 2 },
+        "Mage of the Black Rod": { strength: 3, iq: 2, piety: 2, luck: 3 },
+        Ninja: { strength: 2, iq: 1, vitality: 2, dexterity: 2, speed: 3 },
+        Samurai: { strength: 3, iq: 1, vitality: 2, dexterity: 2, speed: 2 }
+    };
+
+    function calculateStats() {
+        const sex = document.getElementById("sex").value;
+        const attr = document.getElementById("attribute").value;
+        const race = document.getElementById("race").value;
+        const cls = document.getElementById("class").value;
+
+        const result = { ...baseStats };
+
+        [sexMod[sex], attributeMod[attr], raceMod[race], classMod[cls]].forEach(modSet => {
+            for (const [key, value] of Object.entries(modSet)) {
+                result[key] += value;
+            }
+        });
+
+        for (const stat in result) {
+            document.getElementById("stat-" + stat).textContent = result[stat];
+        }
+    }
+
+    ["sex", "attribute", "race", "class"].forEach(id =>
+        document.getElementById(id).addEventListener("change", calculateStats)
+    );
+
+    calculateStats();
+</script>
+</body>
+</html>
